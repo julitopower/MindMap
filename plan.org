@@ -1,0 +1,27 @@
+* Features
+** Read org-syntax
+** Output png
+** Nodes have shape, color
+** Edges have line style, color
+** Project generates a library
+** Project generates an application
+** Generate rpm
+** Publish to conda
+** Publish to apt
+* Task breakdown
+** INPROGRESS Setup project structure
+   START: <2021-01-07 Thu>
+*** DONE Create github project
+    START: <2021-01-07 Thu>
+    CLOSED: [2021-01-07 Thu 07:13]
+*** INPROGRESS Setup CMake structure
+    START: <2021-01-07 Thu>
+*** TODO Decide on testing framework
+*** TODO Enable CI/CD in github
+** M0: MindMap language specification
+** M1: Read graph specification into memory
+Use a formal grammar.
+*** TODO Design internal representation
+*** TODO Implement parser
+** M2: Output png
+*** Integrate graphvizlib
