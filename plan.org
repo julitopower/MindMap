@@ -16,7 +16,10 @@
     CLOSED: [2021-01-07 Thu 07:13]
 *** INPROGRESS Setup CMake structure
     START: <2021-01-07 Thu>
-*** TODO Decide on testing framework
+*** DONE Decide on testing framework
+    CLOSED: [2021-01-08 Fri 07:45]
+
+We have decided to use GTest. Its integration with CMake is fantastic, and it is very easy to use.
 *** TODO Enable CI/CD in github
 ** M0: MindMap language specification
 ** M1: Read graph specification into memory
