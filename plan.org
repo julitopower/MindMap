@@ -8,19 +8,27 @@
 ** Generate rpm
 ** Publish to conda
 ** Publish to apt
-* Task breakdown
-** INPROGRESS Setup project structure
+* References
+* [[https://www.graphviz.org/pdf/libguide.pdf][Using Graphviz as a Library]]
+
+* task breakdown
+** DONE Setup project structure
+   CLOSED: [2021-01-09 Sat 12:46]
    START: <2021-01-07 Thu>
 *** DONE Create github project
     START: <2021-01-07 Thu>
     CLOSED: [2021-01-07 Thu 07:13]
-*** INPROGRESS Setup CMake structure
+*** DONE Setup CMake structure
+    CLOSED: [2021-01-09 Sat 12:46]
     START: <2021-01-07 Thu>
 *** DONE Decide on testing framework
     CLOSED: [2021-01-08 Fri 07:45]
 
 We have decided to use GTest. Its integration with CMake is fantastic, and it is very easy to use.
 *** TODO Enable CI/CD in github
+** INPROGRESS Mp: Render dot file
+   START: <2021-01-09 Sat>
+This is a preliminary task intended to facilitate learning how to use GraphViz as a library. I'll manually write a dot file and then call a function that will render it to an image. This will be coded as a library function and a test.
 ** M0: MindMap language specification
 ** M1: Read graph specification into memory
 Use a formal grammar.
