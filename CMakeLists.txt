@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 17)
 ################################################################################
 # All the options go here
 #
-# BUILD_TEST: Default ON. Build tests?
+# BUILD_TESTS: Default ON. Build tests?
 #
 ################################################################################
 option(BUILD_TESTS "Do we also buitd the tests?" ON)
