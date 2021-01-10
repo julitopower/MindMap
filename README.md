@@ -25,6 +25,6 @@ Application to graphical MindMaps  from descriptions written in org-mode inspire
 * Output png
 * Nodes have shape, color
 * Edges have line style, color
-* Generate rpm package
+* Generate debian package
 * Publish to conda
 * Publish to apt

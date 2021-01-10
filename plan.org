@@ -5,14 +5,14 @@
 ** Edges have line style, color
 ** Project generates a library
 ** Project generates an application
-** Generate rpm
+** Generate debian package
 ** Publish to conda
 ** Publish to apt
 * References
-* [[https://www.graphviz.org/pdf/libguide.pdf][Using Graphviz as a Library]]
+- [[https://www.graphviz.org/pdf/libguide.pdf][Using Graphviz as a Library]]
 
 * task breakdown
-** DONE Setup project structure
+** TODO Setup project structure
    CLOSED: [2021-01-09 Sat 12:46]
    START: <2021-01-07 Thu>
 *** DONE Create github project
@@ -26,12 +26,18 @@
 
 We have decided to use GTest. Its integration with CMake is fantastic, and it is very easy to use.
 *** TODO Enable CI/CD in github
-** INPROGRESS Mp: Render dot file
+** DONE Mp: Render dot file + debian package
+   CLOSED: [2021-01-10 Sun 19:24]
    START: <2021-01-09 Sat>
-This is a preliminary task intended to facilitate learning how to use GraphViz as a library. I'll manually write a dot file and then call a function that will render it to an image. This will be coded as a library function and a test.
+This is a preliminary task intended to facilitate learning how to use GraphViz as a library. I'll manually write a dot file and then call a function that will render it to an image. This will be coded as a library function and a test. We have also included CMake configuration to generate a debian package.
+
+*** DONE Render dot file to png
+    CLOSED: [2021-01-10 Sun 19:28]
+*** DONE Generate debian package via CMake
+    CLOSED: [2021-01-10 Sun 19:29]
 ** M0: MindMap language specification
-** M1: Read graph specification into memory
 Use a formal grammar.
+** M1: Read graph specification into memory
 *** TODO Design internal representation
 *** TODO Implement parser
 ** M2: Output png
