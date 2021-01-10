@@ -1,3 +1,6 @@
-set(SRC main.cpp)
+set(SRC dotpng.cpp)
 
-add_executable(mindmap ${SRC})
+add_executable(dotpng ${SRC})
+target_link_libraries(dotpng mm)
+
+
