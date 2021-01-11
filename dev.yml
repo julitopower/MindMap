@@ -13,4 +13,6 @@ dependencies:
   - clangdev
   - graphviz=2.40
   - gtest=1.10.0
+  - flex=2.6.4
+  - bison=3.7.4
   
