@@ -9,8 +9,7 @@ A mindmap is a directe graph with a single root node. Each node support configur
 
 # Syntactic Elements
 
-/*
-
+```
 QSTR     \"(\\.|[^\\"])*\"
 LEVEL     \*+
 LETTER   [a-zA-Z]
@@ -35,14 +34,14 @@ EdgeAttributeName: "line" | "color" | "width" | "arrow"
 NodeAttributeName: "line" | "color"
 Value: NAME | (INT|REAL)[unit]
 Unit: "px" | "pc"
- */
+```
 
 
 # Further format restrictions
 
 Given a parent node all descendants children must appear after it, and before any other node at the same level or above it. We can consider that the definition of a node opens a scope. Elements can only be added to the scope while it is open. As soon as a node at the same or higher level is defined, the current scope it is closed. This idea seems a bit difficult to model as a formal grammar.
 
-```markdown
+```
 0.1
 * Parent [line=solid,width=10] -> [line=dashed]
 ** Child-1
