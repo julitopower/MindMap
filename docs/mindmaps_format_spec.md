@@ -9,22 +9,33 @@ A mindmap is a directe graph with a single root node. Each node support configur
 
 # Syntactic Elements
 
-LEVEL: "*"+
-NAME: String - {"="}
-ARROW: "->"
-NL: "\n"
+/*
+
+QSTR     \"(\\.|[^\\"])*\"
+LEVEL     \*+
+LETTER   [a-zA-Z]
+ID       {LETTER}({LETTER}|[0-9])*
+ARROW    ->
+NL       \n
+EQ       \=
+INT      [1-9][0-9]*
+REAL     ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)
+
 
 Mindmap: Version (Comment | Node)+
 Comment: # String NL
-Version: NUMBER.NUMBER NL
-Node: LEVEL NAME [AttributesList] [ARROW AttributesList] NL
+Version: INT.INT NL
+Node: LEVEL (NAME|QSTR) [AttributesList] [ARROW AttributesList] NL
 AttributesList: "[" (EdgeAttributes | NodeAttributes) "]"
 EdgeAttributes: EdgeAttribute {"," EdgeAttribute)}
 NodeAttributes: NodeAttribute {"," NodeAttribute}
-EdgeAttribute: EdgeAttributeName "=" Value 
+EdgeAttribute: EdgeAttributeName "=" Value
 NodeAttribute: ModeAttributeName "=" Value
 EdgeAttributeName: "line" | "color" | "width" | "arrow"
 NodeAttributeName: "line" | "color"
+Value: NAME | (INT|REAL)[unit]
+Unit: "px" | "pc"
+ */
 
 
 # Further format restrictions
@@ -33,16 +44,12 @@ Given a parent node all descendants children must appear after it, and before an
 
 ```markdown
 0.1
-* Parent[line=solid,width=10] -> [line=dashed]
+* Parent [line=solid,width=10] -> [line=dashed]
 ** Child-1
 ** Child-2
 ** Child-3
 *** G-child-1
-* Sibling
+* "Multi-word node text must be quoted"
 ```
 
-# Recursive descent design
-
-* Each rule becomes a function
-* Lexer rules just pattern match
 

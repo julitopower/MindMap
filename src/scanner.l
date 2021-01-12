@@ -1,43 +1,66 @@
 /* This gets copied verbatim in the generated file */
 /*
-LEVEL: "*"+
-NAME: String - {"="}
-ARROW: "->"
-NL: "\n"
 
-Mindmap: Version (Comment | Node)+
-Comment: # String NL
-Version: NUMBER.NUMBER NL
-Node: LEVEL NAME [AttributesList] [ARROW AttributesList] NL
-AttributesList: "[" (EdgeAttributes | NodeAttributes) "]"
-EdgeAttributes: EdgeAttribute {"," EdgeAttribute)}
-NodeAttributes: NodeAttribute {"," NodeAttribute}
-EdgeAttribute: EdgeAttributeName "=" Value 
-NodeAttribute: ModeAttributeName "=" Value
-EdgeAttributeName: "line" | "color" | "width" | "arrow"
-NodeAttributeName: "line" | "color"  
- */
-%{
-// Needed because we are generating C++  
-extern "C" int yylex();
-%}
-
-STAR     \*
+QSTR     \"(\\.|[^\\"])*\"
+LEVEL     \*+
 LETTER   [a-zA-Z]
 ID       {LETTER}({LETTER}|[0-9])*
 ARROW    ->
 NL       \n
-KW       line|color|width|arrow
+EQ       \=
+INT      [1-9][0-9]*
+REAL     ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)
+
+
+Mindmap: Version (Comment | Node)+
+Comment: # String NL
+Version: INT.INT NL
+Node: LEVEL (NAME|QSTR) [AttributesList] [ARROW AttributesList] NL
+AttributesList: "[" (EdgeAttributes | NodeAttributes) "]"
+EdgeAttributes: EdgeAttribute {"," EdgeAttribute)}
+NodeAttributes: NodeAttribute {"," NodeAttribute}
+EdgeAttribute: EdgeAttributeName "=" Value
+NodeAttribute: ModeAttributeName "=" Value
+EdgeAttributeName: "line" | "color" | "width" | "arrow"
+NodeAttributeName: "line" | "color"
+Value: NAME | (INT|REAL)[unit]
+Unit: "px" | "pc"
+ */
+%{
+// Needed because we are generating C++
+extern "C" int yylex();
+%}
+
+/* Quoted string */
+QSTR     \"(\\.|[^\\"])*\"
+/* Multiple '*' define a level */
+LEVEL     \*+
+LETTER   [a-zA-Z]
+ID       {LETTER}({LETTER}|[0-9])*
+ARROW    ->
+NL       \n
+EQ       \=
+INT      [1-9][0-9]*
+REAL     ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)
+
 
 /* Rules go here */
 %%
-{KW}    { printf("KW(%s)", yytext); }
-{STAR}+ { printf("L(%s)", yytext); }
-{ID}    { printf("Name(%s)", yytext); }
-{ARROW} { printf("ARR"); }
+{QSTR} { printf("QUOTED_STR(%s) ", yytext); }
+ /* The number of starts is the level depth */
+{LEVEL} {
+  printf("L(%d) ", strlen(yytext));
+}
+{ID}    { printf("Name(%s) ", yytext); }
+{ARROW} { printf("ARR "); }
+{INT} { printf("INT(%s) ", yytext); }
+{REAL} { printf("REAL(%s) ", yytext); }
 \n    { printf("NL\n"); }
-\[       { printf("L_SBR[ "); }
-\]       { printf(" ]R_SBR"); }
+\[       { printf("[ "); }
+\]       { printf(" ]"); }
+= { printf("EQ "); }
+, { printf("COMMA "); }
+. {}
 %%
 
 int main(int argc, char *argv[])
