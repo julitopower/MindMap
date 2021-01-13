@@ -10,7 +10,8 @@
 ** Publish to apt
 * References
 - [[https://www.graphviz.org/pdf/libguide.pdf][Using Graphviz as a Library]]
-
+- [[https://www.gnu.org/software/bison/manual/bison.pdf][Bison manual]]
+- [[http://westes.github.io/flex/manual/][Flex manual]]
 * task breakdown
 ** TODO Setup project structure
    CLOSED: [2021-01-09 Sat 12:46]
@@ -35,8 +36,13 @@ This is a preliminary task intended to facilitate learning how to use GraphViz a
     CLOSED: [2021-01-10 Sun 19:28]
 *** DONE Generate debian package via CMake
     CLOSED: [2021-01-10 Sun 19:29]
-** M0: MindMap language specification
-Use a formal grammar.
+** INPROGRESS M0: MindMap language specification
+Use a formal grammar. The actual design of the AST we will use for code generation belongs in M1. We begin with a C based scanner and parser, but may need to convert it to C++ so that we can generate the AST in a simpler manner.
+*** DONE Build simple c-Flex scanner
+    CLOSED: [2021-01-12 Tue 20:41]
+*** INPROGRESS Build simple c-Bison parser
+*** Put them together in a validate utils function
+The validate will simply go through the input a check if it complies with the grammar
 ** M1: Read graph specification into memory
 *** TODO Design internal representation
 *** TODO Implement parser

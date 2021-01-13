@@ -27,9 +27,12 @@ Value: NAME | (INT|REAL)[unit]
 Unit: "px" | "pc"
  */
 %{
-// Needed because we are generating C++
-extern "C" int yylex();
+#include "parser.h"
+int yylex(void);
+char* es = "";
 %}
+
+%option noyywrap
 
 /* Quoted string */
 QSTR     \"(\\.|[^\\"])*\"
@@ -46,27 +49,21 @@ REAL     ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)
 
 /* Rules go here */
 %%
-{QSTR} { printf("QUOTED_STR(%s) ", yytext); }
+{QSTR} { yylval.str=yytext; return QSTR; }
  /* The number of starts is the level depth */
 {LEVEL} {
-  printf("L(%d) ", strlen(yytext));
+  yylval.i = strlen(yytext);
+  return LEVEL;
 }
-{ID}    { printf("Name(%s) ", yytext); }
-{ARROW} { printf("ARR "); }
-{INT} { printf("INT(%s) ", yytext); }
-{REAL} { printf("REAL(%s) ", yytext); }
-\n    { printf("NL\n"); }
-\[       { printf("[ "); }
-\]       { printf(" ]"); }
-= { printf("EQ "); }
-, { printf("COMMA "); }
+{ID}    { yylval.str=yytext; return NAME; }
+{ARROW} { return ARROW; }
+{INT} { return INT; }
+{REAL} { return REAL; }
+\n    {  yylval.str=es; return '\n'; }
+\[       { return yytext[0]; }
+\]       { return yytext[0]; }
+= { return yytext[0]; }
+, { return yytext[0]; }
 . {}
 %%
 
-int main(int argc, char *argv[])
-{
-  ++argv, --argc; /* Do not consider the program name */
-  yyin = fopen(argv[0], "r");
-  yylex();
-  return 0;
-}

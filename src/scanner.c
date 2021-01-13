@@ -1,6 +1,6 @@
-#line 1 "/opt/src/src/scanner.cpp"
+#line 1 "/opt/src/src/scanner.c"
 
-#line 3 "/opt/src/src/scanner.cpp"
+#line 3 "/opt/src/src/scanner.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -323,6 +323,9 @@ void yyfree ( void *  );
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
 /* Begin user sect3 */
+
+#define yywrap() (/*CONSTCOND*/1)
+#define YY_SKIP_YYWRAP
 typedef flex_uint8_t YY_CHAR;
 
 FILE *yyin = NULL, *yyout = NULL;
@@ -488,12 +491,14 @@ Value: NAME | (INT|REAL)[unit]
 Unit: "px" | "pc"
  */
 #line 30 "scanner.l"
-// Needed because we are generating C++
-extern "C" int yylex();
-#line 493 "/opt/src/src/scanner.cpp"
+#include "parser.h"
+int yylex(void);
+char* es = "";
+#line 497 "/opt/src/src/scanner.c"
 /* Quoted string */
+/* Multiple '*' define a level */
 /* Rules go here */
-#line 496 "/opt/src/src/scanner.cpp"
+#line 501 "/opt/src/src/scanner.c"
 
 #define INITIAL 0
 
@@ -710,9 +715,9 @@ YY_DECL
 		}
 
 	{
-#line 47 "scanner.l"
+#line 51 "scanner.l"
 
-#line 715 "/opt/src/src/scanner.cpp"
+#line 720 "/opt/src/src/scanner.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -772,74 +777,75 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 48 "scanner.l"
-{ printf("QUOTED_STR(%s) ", yytext); }
+#line 52 "scanner.l"
+{ yylval.str=yytext; return QSTR; }
 	YY_BREAK
-/* Multiple '*' define a level. The number of starts is the level depth */
+/* The number of starts is the level depth */
 case 2:
 YY_RULE_SETUP
-#line 50 "scanner.l"
+#line 54 "scanner.l"
 {
-  printf("L(%d) ", strlen(yytext));
+  yylval.i = strlen(yytext);
+  return LEVEL;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 53 "scanner.l"
-{ printf("Name(%s) ", yytext); }
+#line 58 "scanner.l"
+{ yylval.str=yytext; return NAME; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 54 "scanner.l"
-{ printf("ARR "); }
+#line 59 "scanner.l"
+{ return ARROW; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 55 "scanner.l"
-{ printf("INT(%s) ", yytext); }
+#line 60 "scanner.l"
+{ return INT; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 56 "scanner.l"
-{ printf("REAL(%s) ", yytext); }
+#line 61 "scanner.l"
+{ return REAL; }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 57 "scanner.l"
-{ printf("NL\n"); }
+#line 62 "scanner.l"
+{  yylval.str=es; return '\n'; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 58 "scanner.l"
-{ printf("[ "); }
+#line 63 "scanner.l"
+{ return yytext[0]; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 59 "scanner.l"
-{ printf(" ]"); }
+#line 64 "scanner.l"
+{ return yytext[0]; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 60 "scanner.l"
-{ printf("EQ "); }
+#line 65 "scanner.l"
+{ return yytext[0]; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 61 "scanner.l"
-{ printf("COMMA "); }
+#line 66 "scanner.l"
+{ return yytext[0]; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 62 "scanner.l"
+#line 67 "scanner.l"
 {}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 63 "scanner.l"
+#line 68 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 842 "/opt/src/src/scanner.cpp"
+#line 848 "/opt/src/src/scanner.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1844,14 +1850,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 63 "scanner.l"
+#line 68 "scanner.l"
 
 
-int main(int argc, char *argv[])
-{
-  ++argv, --argc; /* Do not consider the program name */
-  yyin = fopen(argv[0], "r");
-  yylex();
-  return 0;
-}
 
