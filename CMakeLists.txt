@@ -4,7 +4,7 @@
 # https://cmake.org/cmake/help/latest/module/GoogleTest.html
 ################################################################################
 cmake_minimum_required(VERSION 3.9)
-project(MindMap)
+project(MindMap LANGUAGES C CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)

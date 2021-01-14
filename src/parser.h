@@ -66,10 +66,10 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-#line 10 "grammar.y"
+#line 14 "grammar.y"
 union value
 {
-#line 10 "grammar.y"
+#line 14 "grammar.y"
 
   int i;
   double d;
@@ -78,7 +78,7 @@ union value
 #line 79 "/home/julio_delg/projects/MindMap/src/parser.h"
 
 };
-#line 10 "grammar.y"
+#line 14 "grammar.y"
 typedef union value YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

@@ -1,6 +1,6 @@
-#line 1 "/opt/src/src/scanner.c"
+#line 1 "/home/julio_delg/projects/MindMap/src/scanner.c"
 
-#line 3 "/opt/src/src/scanner.c"
+#line 3 "/home/julio_delg/projects/MindMap/src/scanner.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -494,11 +494,11 @@ Unit: "px" | "pc"
 #include "parser.h"
 int yylex(void);
 char* es = "";
-#line 497 "/opt/src/src/scanner.c"
+#line 497 "/home/julio_delg/projects/MindMap/src/scanner.c"
 /* Quoted string */
 /* Multiple '*' define a level */
 /* Rules go here */
-#line 501 "/opt/src/src/scanner.c"
+#line 501 "/home/julio_delg/projects/MindMap/src/scanner.c"
 
 #define INITIAL 0
 
@@ -717,7 +717,7 @@ YY_DECL
 	{
 #line 51 "scanner.l"
 
-#line 720 "/opt/src/src/scanner.c"
+#line 720 "/home/julio_delg/projects/MindMap/src/scanner.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -845,7 +845,7 @@ YY_RULE_SETUP
 #line 68 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 848 "/opt/src/src/scanner.c"
+#line 848 "/home/julio_delg/projects/MindMap/src/scanner.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

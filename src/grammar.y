@@ -1,10 +1,14 @@
 %{
 #include <stdio.h>
-#include <string.h>  
+#include <string.h>
+
+#include "mindmap/cmm.h"
 int yylex(void);
 void yyerror(const char*);
-
 static char* empty_str="";
+
+extern MM_HDL mm;
+
 %}
 
 %union value {
@@ -24,10 +28,12 @@ static char* empty_str="";
 %type <str>attributes
 
 %%
-mindmap: nodes
+mindmap: nodes { mm_print(mm); mm_delete(mm); }
 nodes: nodes node
        | node
-node: LEVEL content attributes '\n' { printf("XXXX%sXXXX\n", $2); free($2); }
+node: LEVEL content attributes '\n' {
+  mm_add_node(mm, $1, $2);
+}
 content: NAME { $$ = strdup($1); }
 | QSTR { $$ = strdup($1); }
 attributes: %empty {$$ = empty_str;}
@@ -42,9 +48,11 @@ value: NAME | INT unit | REAL unit
 unit: %empty | NAME
 %%
 
+MM_HDL mm;
 int
 main (void)
 {
+  mm = mm_new();
   printf("Starting parser\n");
   return yyparse ();
 }

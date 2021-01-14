@@ -70,13 +70,17 @@
 #line 1 "grammar.y"
 
 #include <stdio.h>
-#include <string.h>  
+#include <string.h>
+
+#include "mindmap/cmm.h"
 int yylex(void);
 void yyerror(const char*);
-
 static char* empty_str="";
 
-#line 80 "/home/julio_delg/projects/MindMap/src/parser.c"
+extern MM_HDL mm;
+
+
+#line 84 "/home/julio_delg/projects/MindMap/src/parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -497,9 +501,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    27,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    41,    41,    42,
-      42
+       0,    31,    31,    32,    33,    34,    37,    38,    39,    40,
+      41,    42,    43,    44,    45,    46,    47,    47,    47,    48,
+      48
 };
 #endif
 
@@ -1090,56 +1094,64 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 5: /* node: LEVEL content attributes '\n'  */
-#line 30 "grammar.y"
-                                    { printf("XXXX%sXXXX\n", (yyvsp[-2].str)); free((yyvsp[-2].str)); }
-#line 1097 "/home/julio_delg/projects/MindMap/src/parser.c"
-    break;
-
-  case 6: /* content: NAME  */
+  case 2: /* mindmap: nodes  */
 #line 31 "grammar.y"
-              { (yyval.str) = strdup((yyvsp[0].str)); }
-#line 1103 "/home/julio_delg/projects/MindMap/src/parser.c"
+               { mm_print(mm); mm_delete(mm); }
+#line 1101 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 7: /* content: QSTR  */
-#line 32 "grammar.y"
-       { (yyval.str) = strdup((yyvsp[0].str)); }
+  case 5: /* node: LEVEL content attributes '\n'  */
+#line 34 "grammar.y"
+                                    {
+  mm_add_node(mm, (yyvsp[-3].i), (yyvsp[-2].str));
+}
 #line 1109 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 8: /* attributes: %empty  */
-#line 33 "grammar.y"
-                   {(yyval.str) = empty_str;}
+  case 6: /* content: NAME  */
+#line 37 "grammar.y"
+              { (yyval.str) = strdup((yyvsp[0].str)); }
 #line 1115 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 9: /* attributes: attributes_list  */
-#line 34 "grammar.y"
-                              {(yyval.str) = empty_str;}
+  case 7: /* content: QSTR  */
+#line 38 "grammar.y"
+       { (yyval.str) = strdup((yyvsp[0].str)); }
 #line 1121 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 10: /* attributes: attributes_list ARROW attributes_list  */
-#line 35 "grammar.y"
-                                                    {(yyval.str) = empty_str;}
+  case 8: /* attributes: %empty  */
+#line 39 "grammar.y"
+                   {(yyval.str) = empty_str;}
 #line 1127 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 11: /* attributes: ARROW attributes_list  */
-#line 36 "grammar.y"
-                                    {(yyval.str) = empty_str;}
+  case 9: /* attributes: attributes_list  */
+#line 40 "grammar.y"
+                              {(yyval.str) = empty_str;}
 #line 1133 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 12: /* attributes_list: '[' attributes_l ']'  */
-#line 37 "grammar.y"
-                                      {}
+  case 10: /* attributes: attributes_list ARROW attributes_list  */
+#line 41 "grammar.y"
+                                                    {(yyval.str) = empty_str;}
 #line 1139 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
+  case 11: /* attributes: ARROW attributes_list  */
+#line 42 "grammar.y"
+                                    {(yyval.str) = empty_str;}
+#line 1145 "/home/julio_delg/projects/MindMap/src/parser.c"
+    break;
 
-#line 1143 "/home/julio_delg/projects/MindMap/src/parser.c"
+  case 12: /* attributes_list: '[' attributes_l ']'  */
+#line 43 "grammar.y"
+                                      {}
+#line 1151 "/home/julio_delg/projects/MindMap/src/parser.c"
+    break;
+
+
+#line 1155 "/home/julio_delg/projects/MindMap/src/parser.c"
 
       default: break;
     }
@@ -1333,12 +1345,14 @@ yyreturn:
   return yyresult;
 }
 
-#line 43 "grammar.y"
+#line 49 "grammar.y"
 
 
+MM_HDL mm;
 int
 main (void)
 {
+  mm = mm_new();
   printf("Starting parser\n");
   return yyparse ();
 }
