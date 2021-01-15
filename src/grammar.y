@@ -7,7 +7,7 @@ int yylex(void);
 void yyerror(const char*);
 static char* empty_str="";
 
-extern MM_HDL mm;
+extern MM_HDL mmap;
 
 %}
 
@@ -28,11 +28,11 @@ extern MM_HDL mm;
 %type <str>attributes
 
 %%
-mindmap: nodes { mm_print(mm); mm_delete(mm); }
+mindmap: nodes { mm_print(mmap); }
 nodes: nodes node
        | node
 node: LEVEL content attributes '\n' {
-  mm_add_node(mm, $1, $2);
+  mm_add_node(mmap, $1, $2);
 }
 content: NAME { $$ = strdup($1); }
 | QSTR { $$ = strdup($1); }
@@ -48,14 +48,14 @@ value: NAME | INT unit | REAL unit
 unit: %empty | NAME
 %%
 
-MM_HDL mm;
-int
-main (void)
-{
-  mm = mm_new();
-  printf("Starting parser\n");
-  return yyparse ();
-}
+MM_HDL mmap;
+/* int */
+/* main (void) */
+/* { */
+/*   mmap = mm_new(); */
+/*   printf("Starting parser\n"); */
+/*   return yyparse (); */
+/* } */
 
 /* Called by yyparse on error. */
 void

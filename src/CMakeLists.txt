@@ -29,3 +29,6 @@ message(STATUS ${FLEX_scanner_OUTPUTS} ${BISON_parser_OUTPUTS})
 
 add_executable(parser ${FLEX_scanner_OUTPUTS} ${BISON_parser_OUTPUTS})
 target_link_libraries(parser cmm libfl.a)
+
+add_library(mmparser ${FLEX_scanner_OUTPUTS} ${BISON_parser_OUTPUTS})
+target_link_libraries(parser cmm libfl.a)

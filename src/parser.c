@@ -77,7 +77,7 @@ int yylex(void);
 void yyerror(const char*);
 static char* empty_str="";
 
-extern MM_HDL mm;
+extern MM_HDL mmap;
 
 
 #line 84 "/home/julio_delg/projects/MindMap/src/parser.c"
@@ -1096,14 +1096,14 @@ yyreduce:
     {
   case 2: /* mindmap: nodes  */
 #line 31 "grammar.y"
-               { mm_print(mm); mm_delete(mm); }
+               { mm_print(mmap); }
 #line 1101 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 5: /* node: LEVEL content attributes '\n'  */
 #line 34 "grammar.y"
                                     {
-  mm_add_node(mm, (yyvsp[-3].i), (yyvsp[-2].str));
+  mm_add_node(mmap, (yyvsp[-3].i), (yyvsp[-2].str));
 }
 #line 1109 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
@@ -1348,14 +1348,14 @@ yyreturn:
 #line 49 "grammar.y"
 
 
-MM_HDL mm;
-int
-main (void)
-{
-  mm = mm_new();
-  printf("Starting parser\n");
-  return yyparse ();
-}
+MM_HDL mmap;
+/* int */
+/* main (void) */
+/* { */
+/*   mmap = mm_new(); */
+/*   printf("Starting parser\n"); */
+/*   return yyparse (); */
+/* } */
 
 /* Called by yyparse on error. */
 void

@@ -7,10 +7,10 @@ namespace {
 inline void p(const char *arg) { printf("%s\n", arg); }
 
 void print_help() {
-  p("dotpng input_file");
+  p("mmdot input_file");
   p("");
   p("  input_file: required argument. Path to input file. Must be a");
-  p("              graphviz dot file.");
+  p("              mindmap file.");
 }
 } // unnamed namespace
 
@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 
   // build output filepath as input.png
   std::string output_filepath{argv[1]};
-  output_filepath += ".png";
-  mm::to_png(argv[1], output_filepath.c_str());
+  output_filepath += ".dot";
+  mm::to_dot(argv[1], output_filepath.c_str());
   return 0;
 }

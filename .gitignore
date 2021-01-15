@@ -34,5 +34,7 @@
 # Clangd
 .cache
 
+*.pdf
+
 # CMake
 build

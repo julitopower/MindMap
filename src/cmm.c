@@ -2,30 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
- * An attribute represents a a <key, value>, with both key and value being
- * strings.
- */
-typedef struct Attribute Attribute;
-struct Attribute {
-  char *key;
-  char *value;
-};
-
-/*
- * A node in a mindmap has some depth, content Attributes for how to draw it,
- * and attribute for how to draw the edges between itsel and its children.
- */
-typedef struct Node Node;
-struct Node {
-  int level;
-  char *content;
-  struct Attribute *node_attributes;
-  struct Attribute *edge_attributes;
-  Node **children;
-  int nchildren;
-};
-
 Node *node_new(int level, char *content) {
   // Allocate and initialize a Node
   Node *node = malloc(sizeof(Node));
@@ -124,6 +100,11 @@ void mm_delete(MM_HDL mm) {
   node_free(mm_hdl->root);
   // Free the actual mindmap memory
   free(mm_hdl);
+}
+
+Node* mm_get_root(MM_HDL mm) {
+  Mindmap *mm_hdl = (Mindmap *)mm;
+  return mm_hdl->root;
 }
 
 void mm_print(MM_HDL mm) { node_print_rec(((Mindmap *)mm)->root); }
