@@ -1,5 +1,5 @@
-* Features
-** Read org-syntax
+* \ Features
+** Read org-like-syntax
 ** Output png
 ** Nodes have shape, color
 ** Edges have line style, color
@@ -8,11 +8,11 @@
 ** Generate debian package
 ** Publish to conda
 ** Publish to apt
-* References
+* Reerences
 - [[https://www.graphviz.org/pdf/libguide.pdf][Using Graphviz as a Library]]
 - [[https://www.gnu.org/software/bison/manual/bison.pdf][Bison manual]]
 - [[http://westes.github.io/flex/manual/][Flex manual]]
-* task breakdown
+* task breakdown=
 ** TODO Setup project structure
    CLOSED: [2021-01-09 Sat 12:46]
    START: <2021-01-07 Thu>
@@ -36,15 +36,31 @@ This is a preliminary task intended to facilitate learning how to use GraphViz a
     CLOSED: [2021-01-10 Sun 19:28]
 *** DONE Generate debian package via CMake
     CLOSED: [2021-01-10 Sun 19:29]
-** INPROGRESS M0: MindMap language specification
+** DONE M0: MindMap language specification
+   CLOSED: [2021-01-15 Fri 08:59]
+   
 Use a formal grammar. The actual design of the AST we will use for code generation belongs in M1. We begin with a C based scanner and parser, but may need to convert it to C++ so that we can generate the AST in a simpler manner.
+
 *** DONE Build simple c-Flex scanner
     CLOSED: [2021-01-12 Tue 20:41]
-*** INPROGRESS Build simple c-Bison parser
-*** Put them together in a validate utils function
+    
+*** DONE Build simple c-Bison parser
+    CLOSED: [2021-01-15 Fri 08:49]
+    
+We have built a parser that pretty much handles everything, though it still needs to populate the in-memory attributes. Final language format is not fully defined. For instance, we may add a section for global attributes. I need to play a bit with the tool I currently have to identify and remove the papercuts.
+
+*** CANC Put them together a validate utils function
+    CLOSED: [2021-01-15 Fri 08:50]
+    
 The validate will simply go through the input a check if it complies with the grammar
-** M1: Read graph specification into memory
-*** TODO Design internal representation
-*** TODO Implement parser
+
+** INPROGRESS M1: Read graph specification into memory
+   
+We complete most of this work on M0, but will track here the refinement of the design and implementation
+
+*** TODO Design & document in-memory representation
+*** TODO Define attributes for graph, node and edges
 ** M2: Output png
 *** Integrate graphvizlib
+** M3: Generate a debian package
+** M4: Host in Ubuntu launchpad ppa   
