@@ -442,16 +442,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  8
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   23
+#define YYLAST   25
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  14
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  11
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  20
+#define YYNRULES  21
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  32
+#define YYNSTATES  33
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   263
@@ -501,9 +501,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    31,    31,    32,    33,    34,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    47,    47,    48,
-      48
+       0,    31,    31,    32,    33,    34,    38,    51,    52,    53,
+      54,    55,    56,    57,    58,    59,    60,    61,    61,    61,
+      62,    62
 };
 #endif
 
@@ -542,7 +542,7 @@ static const yytype_int16 yytoknum[] =
 };
 #endif
 
-#define YYPACT_NINF (-11)
+#define YYPACT_NINF (-12)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -556,10 +556,10 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       5,    -1,    10,     5,   -11,   -11,   -11,    -4,   -11,   -11,
-       3,    11,     7,     9,   -11,     4,     0,   -11,   -11,     3,
-      -2,   -11,    11,   -11,   -11,    14,    14,   -11,   -11,   -11,
-     -11,   -11
+       7,     0,    11,     7,   -12,   -12,   -12,    -3,   -12,   -12,
+     -12,     4,    12,     6,    13,   -12,     8,     1,   -12,   -12,
+       4,    -1,   -12,    12,   -12,   -12,    15,    15,   -12,   -12,
+     -12,   -12,   -12
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -567,24 +567,24 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     2,     4,     6,     7,     8,     1,     3,
-       0,     0,     0,     9,    11,     0,     0,    14,     5,     0,
-       0,    12,     0,    10,    16,    19,    19,    15,    13,    20,
-      18,    17
+       0,     0,     0,     2,     4,     7,     8,     9,     1,     3,
+       6,     0,     0,     0,    10,    12,     0,     0,    15,     5,
+       0,     0,    13,     0,    11,    17,    20,    20,    16,    14,
+      21,    19,    18
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -11,   -11,   -11,    16,   -11,   -11,   -10,   -11,     1,   -11,
-      -6
+     -12,   -12,   -12,    14,   -12,   -12,   -11,   -12,     2,   -12,
+      -7
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3,     4,     7,    12,    13,    16,    17,    27,
-      30
+      -1,     2,     3,     4,     7,    13,    14,    17,    18,    28,
+      31
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -592,16 +592,16 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      14,    10,    24,     5,    25,    26,    11,     6,     1,    23,
-       8,    21,    22,    11,    19,    15,    18,    20,    29,     9,
-      31,     0,     0,    28
+      15,    10,    11,    25,     5,    26,    27,    12,     6,    24,
+       1,     8,    22,    23,    12,    19,    16,     9,    20,    30,
+      32,    21,     0,     0,     0,    29
 };
 
 static const yytype_int8 yycheck[] =
 {
-      10,     5,     4,     4,     6,     7,    10,     8,     3,    19,
-       0,    11,    12,    10,     5,     4,     9,    13,     4,     3,
-      26,    -1,    -1,    22
+      11,     4,     5,     4,     4,     6,     7,    10,     8,    20,
+       3,     0,    11,    12,    10,     9,     4,     3,     5,     4,
+      27,    13,    -1,    -1,    -1,    23
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -609,25 +609,25 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     3,    15,    16,    17,     4,     8,    18,     0,    17,
-       5,    10,    19,    20,    20,     4,    21,    22,     9,     5,
-      13,    11,    12,    20,     4,     6,     7,    23,    22,     4,
-      24,    24
+       4,     5,    10,    19,    20,    20,     4,    21,    22,     9,
+       5,    13,    11,    12,    20,     4,     6,     7,    23,    22,
+       4,    24,    24
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    14,    15,    16,    16,    17,    18,    18,    19,    19,
-      19,    19,    20,    21,    21,    22,    23,    23,    23,    24,
-      24
+       0,    14,    15,    16,    16,    17,    18,    18,    18,    19,
+      19,    19,    19,    20,    21,    21,    22,    23,    23,    23,
+      24,    24
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     2,     1,     4,     1,     1,     0,     1,
-       3,     2,     3,     3,     1,     3,     1,     2,     2,     0,
-       1
+       0,     2,     1,     2,     1,     4,     2,     1,     1,     0,
+       1,     3,     2,     3,     3,     1,     3,     1,     2,     2,
+       0,     1
 };
 
 
@@ -1108,50 +1108,68 @@ yyreduce:
 #line 1109 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 6: /* content: NAME  */
-#line 37 "grammar.y"
-              { (yyval.str) = strdup((yyvsp[0].str)); }
-#line 1115 "/home/julio_delg/projects/MindMap/src/parser.c"
-    break;
-
-  case 7: /* content: QSTR  */
+  case 6: /* content: content NAME  */
 #line 38 "grammar.y"
-       { (yyval.str) = strdup((yyvsp[0].str)); }
-#line 1121 "/home/julio_delg/projects/MindMap/src/parser.c"
-    break;
-
-  case 8: /* attributes: %empty  */
-#line 39 "grammar.y"
-                   {(yyval.str) = empty_str;}
+                      {
+  // Allocate memory to hold both strings and a space
+  int l = strlen((yyvsp[-1].str)) + strlen((yyvsp[0].str)) + 1;
+  // Allocate one extra character for the null terminator
+  char* outptr = calloc(l + 1, sizeof(char));
+  strcat(outptr, (yyvsp[-1].str));
+  strcat(outptr, " ");
+  strcat(outptr, (yyvsp[0].str));
+  (yyval.str) = outptr;
+  // $1 is necessarily manually allocated memory that we have
+  // just copied, so we need to relesease it
+  free((yyvsp[-1].str));
+}
 #line 1127 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 9: /* attributes: attributes_list  */
-#line 40 "grammar.y"
-                              {(yyval.str) = empty_str;}
+  case 7: /* content: NAME  */
+#line 51 "grammar.y"
+                { (yyval.str) = strdup((yyvsp[0].str)); }
 #line 1133 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 10: /* attributes: attributes_list ARROW attributes_list  */
-#line 41 "grammar.y"
-                                                    {(yyval.str) = empty_str;}
+  case 8: /* content: QSTR  */
+#line 52 "grammar.y"
+                { (yyval.str) = strdup((yyvsp[0].str)); }
 #line 1139 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 11: /* attributes: ARROW attributes_list  */
-#line 42 "grammar.y"
-                                    {(yyval.str) = empty_str;}
+  case 9: /* attributes: %empty  */
+#line 53 "grammar.y"
+                   {(yyval.str) = empty_str;}
 #line 1145 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 12: /* attributes_list: '[' attributes_l ']'  */
-#line 43 "grammar.y"
-                                      {}
+  case 10: /* attributes: attributes_list  */
+#line 54 "grammar.y"
+                              {(yyval.str) = empty_str;}
 #line 1151 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
+  case 11: /* attributes: attributes_list ARROW attributes_list  */
+#line 55 "grammar.y"
+                                                    {(yyval.str) = empty_str;}
+#line 1157 "/home/julio_delg/projects/MindMap/src/parser.c"
+    break;
 
-#line 1155 "/home/julio_delg/projects/MindMap/src/parser.c"
+  case 12: /* attributes: ARROW attributes_list  */
+#line 56 "grammar.y"
+                                    {(yyval.str) = empty_str;}
+#line 1163 "/home/julio_delg/projects/MindMap/src/parser.c"
+    break;
+
+  case 13: /* attributes_list: '[' attributes_l ']'  */
+#line 57 "grammar.y"
+                                      {}
+#line 1169 "/home/julio_delg/projects/MindMap/src/parser.c"
+    break;
+
+
+#line 1173 "/home/julio_delg/projects/MindMap/src/parser.c"
 
       default: break;
     }
@@ -1345,7 +1363,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 49 "grammar.y"
+#line 63 "grammar.y"
 
 
 MM_HDL mmap;

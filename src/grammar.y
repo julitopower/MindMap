@@ -34,8 +34,22 @@ nodes: nodes node
 node: LEVEL content attributes '\n' {
   mm_add_node(mmap, $1, $2);
 }
-content: NAME { $$ = strdup($1); }
-| QSTR { $$ = strdup($1); }
+/* A node content can mix unquoted single IDs and quoted strings N times */
+content: content NAME {
+  // Allocate memory to hold both strings and a space
+  int l = strlen($1) + strlen($2) + 1;
+  // Allocate one extra character for the null terminator
+  char* outptr = calloc(l + 1, sizeof(char));
+  strcat(outptr, $1);
+  strcat(outptr, " ");
+  strcat(outptr, $2);
+  $$ = outptr;
+  // $1 is necessarily manually allocated memory that we have
+  // just copied, so we need to relesease it
+  free($1);
+}
+         | NAME { $$ = strdup($1); }
+         | QSTR { $$ = strdup($1); }
 attributes: %empty {$$ = empty_str;}
             | attributes_list {$$ = empty_str;}
             | attributes_list ARROW attributes_list {$$ = empty_str;}

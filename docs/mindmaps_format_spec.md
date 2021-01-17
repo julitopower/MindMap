@@ -24,7 +24,7 @@ REAL     ([0-9]*\.[0-9]+|[0-9]+\.[0-9]*)
 Mindmap: Version (Comment | Node)+
 Comment: # String NL
 Version: INT.INT NL
-Node: LEVEL (NAME|QSTR) [AttributesList] [ARROW AttributesList] NL
+Node: LEVEL (NAME|QSTR)+ [AttributesList] [ARROW AttributesList] NL
 AttributesList: "[" (EdgeAttributes | NodeAttributes) "]"
 EdgeAttributes: EdgeAttribute {"," EdgeAttribute)}
 NodeAttributes: NodeAttribute {"," NodeAttribute}
@@ -48,7 +48,9 @@ Given a parent node all descendants children must appear after it, and before an
 ** Child-2
 ** Child-3
 *** G-child-1
-* "Multi-word node text must be quoted"
+** "Quoted strings, including multiword are supported"
+** "Mix quoted" and unquoted strings
+
 ```
 
 

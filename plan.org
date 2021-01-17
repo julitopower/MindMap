@@ -1,4 +1,4 @@
-* \ Features
+* Features
 ** Read org-like-syntax
 ** Output png
 ** Nodes have shape, color
@@ -59,6 +59,7 @@ The validate will simply go through the input a check if it complies with the gr
 We complete most of this work on M0, but will track here the refinement of the design and implementation
 
 *** TODO Design & document in-memory representation
+    The design of the basic in-memory mindmap tree and the machinery to build/transform it are in place. We still need to take care of the attributes, and a principled mechanism to transform them. We are still missing the documentation part, which we want to do with diagrams.
 *** TODO Define attributes for graph, node and edges
 ** M2: Output png
 *** Integrate graphvizlib
