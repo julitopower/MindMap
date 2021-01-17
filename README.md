@@ -36,6 +36,9 @@ Application to graphical MindMaps  from descriptions written in org-mode inspire
 * CMake-3.2
 * graphviz-2.40
 * gtest-1.10
+* flex-2.6.4
+* bison-3.7.4
+
 
 A fully function build environment can be built using Conda and the provided ```dev.yml``` Conda environment definition file:
 
