@@ -39,13 +39,22 @@ char *quote(char *str) {
 
 /* Given a node, it recursively prints the entire tree
    as a Graphviz digraph, excluding header and footer */
-void node_to_dot(std::ofstream &os, Node *node) {
+void node_to_dot(std::ofstream &os, Node *node, bool master = false) {
   if (node->nchildren > 0) {
     char *content = quote(node->content);
+    if (master) {
+      os << content << " [peripheries=2, fontname=\"alial bold\"];\n";
+    }
     for (auto i = 0; i < node->nchildren; ++i) {
       char *child_content = quote(node->children[i]->content);
 
-      os << content << " -> " << child_content << std::endl;
+      os << content << " -> " << child_content;
+
+      if (master) {
+        os << "[color=red]";
+      }
+
+      os << std::endl;
 
       free(child_content);
       node_to_dot(os, node->children[i]);
@@ -98,8 +107,16 @@ extern "C" bool to_dot(const char *mmfilepath, const char *dotfilepath) {
   // Layout from left to right
   ofs << "rankdir=LR;\n";
 
+  // global node attributes
+  ofs << "graph [bgcolor=\"#ffcc40\", splines=curved, root=\"JustDoIt\", "
+         "layout=dot, K=1.1,  overlap=false, start=42, maxiter=100000]\n";
+  ofs << "node [shape=box, "
+         "color=\"#2e6e3f\"fillcolor=\"#feffed\"style=\"filled,rounded\", "
+         "fontname=arial, fontsize=11]\n";
+  ofs << "edge [arrowhead = open, color=\"#002b36\"]\n";
+
   // Write out nodes
-  node_to_dot(ofs, mm_get_root(mmap));
+  node_to_dot(ofs, mm_get_root(mmap), true);
 
   // Write footer
   ofs << "}\n";

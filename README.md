@@ -1,5 +1,42 @@
 # MindMap
-Application to graphical MindMaps  from descriptions written in org-mode inspired syntax
+Application to graphical MindMaps  from descriptions written in org-mode inspired syntax. The following sample mindmpap
+
+![](docs/sample.png)
+
+is generated from this mindmap definition
+
+```markdown
+* DeepLearning
+** Autonomous Vehicles
+*** Cabin Automation
+*** Perception
+**** Object detection
+**** Semantic Segmentation
+*** Localization
+**** GPS
+**** SLAM
+***** Kalman filter
+***** FastSLAM
+***** GraphSLAM
+*** Mapping
+*** Behavior
+** "Computer Vision"
+** "DeepRL"
+*** "Alpha-go"
+*** "Atari games"
+** "Tranformers"
+*** "Large Language models"
+**** DeepSpeed
+**** MegatronLM
+** PDE
+** Problems
+*** "Slow convergence"
+*** "Not enough\n data"
+**** Data augmentation
+**** Active Learning
+**** Transfer learning
+**** "Semi-supervised learning"
+```
 
 # Features
 
