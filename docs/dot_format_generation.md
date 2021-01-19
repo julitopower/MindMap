@@ -46,6 +46,6 @@ So a simple strategy for translating could be
 * Write out each node in a line -> doing a simple traversal
 * Write out each parent-child edge -> doing a simple traversal
 
-Another alternative, to produce a more compact output, euqualy dot valid:
+Another alternative to produce a more compact output:
 
 * Write out each parent-child edge -> Doing a simple traversal. Graphviz adds nodes that appear for the first time in an edge representation, so we can save the need to pre-declare all the nodes. <- **This is the one I am going to prototype**.
