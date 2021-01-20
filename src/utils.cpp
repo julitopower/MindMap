@@ -4,15 +4,17 @@
 #include <graphviz/gvc.h>
 #include <graphviz/gvcext.h>
 #include <iostream>
+#include <memory>
 #include <string>
 
+#include "mindmap/mm.hpp"
 #include "mindmap/utils.hpp"
+// Mindmap C data structures
+#include "cmm_int.h"
 
 // We use the C interface of flex/bison, and also defined the
 // mindmap datastructures in C
 extern "C" {
-// Mindmap data structures
-#include "mindmap/cmm.h"
 // Flex/Bison
 #include "parser.h"
 

@@ -1,4 +1,4 @@
-set(SRC test_dummy.cpp test_utils.cpp)
+set(SRC test_dummy.cpp test_utils.cpp test_mindmap_builder.cpp)
 
 ################################################################################
 # Make sure GTest is present and enable it

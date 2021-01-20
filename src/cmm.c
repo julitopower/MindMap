@@ -1,4 +1,4 @@
-#include "mindmap/cmm.h"
+#include "cmm_int.h"
 #include <stdio.h>
 #include <stdlib.h>
 

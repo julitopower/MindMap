@@ -1,4 +1,3 @@
-
 #include <gtest/gtest.h>
 
 #include "mindmap/utils.hpp"

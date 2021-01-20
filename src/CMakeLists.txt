@@ -3,13 +3,13 @@
 ################################################################################
 # Mindmap C library
 ################################################################################
-set(SRC "cmm.c")
+set(SRC cmm.c cmm_int.h)
 add_library(cmm STATIC ${SRC})
 
 ################################################################################
 # Utilities C++ library
 ################################################################################
-set(SRC "utils.cpp")
+set(SRC utils.cpp cmm_int.h)
 add_library(mm STATIC ${SRC})
 target_link_libraries(mm gvc cgraph)
 

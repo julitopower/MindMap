@@ -1,32 +1,14 @@
-#ifndef MM_HPP
-#define MM_HPP
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*! \brief Handler to a mindmap */
 typedef void *MM_HDL;
 
-/*! \brief An attribute of a graph, node or edge
- * An attribute represents a <key, value>, with both key and value being
- * strings.
- */
-typedef struct Attribute Attribute;
-struct Attribute {
-  char *key;
-  char *value;
-};
-
-/*! \brief A node in a mindmap
- * A node in a mindmap has some depth, content Attributes for how to draw it,
- * and attribute for how to draw the edges between itsel and its children.
- */
 typedef struct Node Node;
-struct Node {
-  int level;
-  char *content;
-  struct Attribute *node_attributes;
-  struct Attribute *edge_attributes;
-  Node **children;
-  int nchildren;
-};
+typedef struct Attribute Attribute;
 
 /*! \brief Allocate a new mindmap.
  *
@@ -48,4 +30,7 @@ void mm_add_node_attribute(MM_HDL mm, struct Attribute *attribute);
 void mm_add_edge_attribute(MM_HDL mm, struct Attribute *attribute);
 /*! \brief Print a mindmapt to stdout */
 void mm_print(MM_HDL mm);
+
+#ifdef __cplusplus
+}
 #endif
