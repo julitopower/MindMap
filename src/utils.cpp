@@ -7,10 +7,9 @@
 #include <memory>
 #include <string>
 
+#include "mindmap/cmm.h"
 #include "mindmap/mm.hpp"
 #include "mindmap/utils.hpp"
-// Mindmap C data structures
-#include "cmm_int.h"
 
 // We use the C interface of flex/bison, and also defined the
 // mindmap datastructures in C
@@ -19,7 +18,10 @@ extern "C" {
 #include "parser.h"
 
 extern FILE *yyin;
-extern void *mmap;
+
+// Global handler for mm::MindMapBuilder. This is referred to
+// as extern in the grammar.y
+MM_HDL mmap;
 }
 
 namespace {
@@ -27,28 +29,23 @@ namespace {
 /* Add surounding quotes to a string. Allocates new memory, and does
    not release the memory provided. It always returns the new allocated
    memory */
-char *quote(char *str) {
-  char *out = static_cast<char *>(calloc(strlen(str) + 3, sizeof(char)));
+std::string quote(const std::string &str) {
   if (str[0] != '\"') {
-    strcat(out, "\"");
-    strcat(out, str);
-    strcat(out, "\"");
-    return out;
+    return "\"" + str + "\"";
   }
-  strcpy(out, str);
-  return out;
+  return str;
 }
 
 /* Given a node, it recursively prints the entire tree
    as a Graphviz digraph, excluding header and footer */
-void node_to_dot(std::ofstream &os, Node *node, bool master = false) {
-  if (node->nchildren > 0) {
-    char *content = quote(node->content);
+void node_to_dot(std::ofstream &os, const mm::Node &node, bool master = false) {
+  if (!node.children().empty()) {
+    std::string content = quote(node.content());
     if (master) {
       os << content << " [peripheries=2, fontname=\"alial bold\"];\n";
     }
-    for (auto i = 0; i < node->nchildren; ++i) {
-      char *child_content = quote(node->children[i]->content);
+    for (const auto &child : node.children()) {
+      std::string child_content = quote(child->content());
 
       os << content << " -> " << child_content;
 
@@ -57,26 +54,22 @@ void node_to_dot(std::ofstream &os, Node *node, bool master = false) {
       }
 
       os << std::endl;
-
-      free(child_content);
-      node_to_dot(os, node->children[i]);
+      node_to_dot(os, *child.get());
     }
-    free(content);
   }
 }
 
-void parse(const char *mmfilepath) {
+void parse(const char *mmfilepath, mm::MindMapBuilder &mm_builder) {
   // Initialize the parsing machinery. Note that we MUST initialize the
   // mmap Gloval. This variable is internally used by the parser to build
   // the mindmap in-memory representation
   yyin = fopen(mmfilepath, "r");
-  mmap = mm_new();
+  mmap = static_cast<MM_HDL>(&mm_builder);
 
   // Parse and as a print the resulting mindmap (this is temporary)
   // TODO: Error handling
   yyparse();
   fclose(yyin);
-  mm_print(mmap);
 }
 } // namespace
 
@@ -99,7 +92,11 @@ extern "C" bool to_png(const char *dotfilepath, const char *pngfilepath) {
 }
 
 extern "C" bool to_dot(const char *mmfilepath, const char *dotfilepath) {
-  parse(mmfilepath);
+  mm::MindMapBuilder mm_builder{};
+
+  // Parse populates the builder
+  parse(mmfilepath, mm_builder);
+  MindMap mindmap{mm_builder.build()};
 
   std::ofstream ofs{dotfilepath};
   // Generate the output
@@ -118,13 +115,12 @@ extern "C" bool to_dot(const char *mmfilepath, const char *dotfilepath) {
   ofs << "edge [arrowhead = open, color=\"#002b36\"]\n";
 
   // Write out nodes
-  node_to_dot(ofs, mm_get_root(mmap), true);
+
+  node_to_dot(ofs, mindmap.root(), true);
 
   // Write footer
   ofs << "}\n";
 
-  // Free mindmap
-  mm_delete(mmap);
   return true;
 }
 } // namespace mm

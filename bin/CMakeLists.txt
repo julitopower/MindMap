@@ -5,7 +5,7 @@ set(SRC dotpng.cpp)
 add_executable(dotpng ${SRC})
 target_link_libraries(dotpng mm)
 
-set(MM_PARSE_LIBS mm cmm mmparser)
+set(MM_PARSE_LIBS mm mmparser)
 
 ################################################################################
 # Utility to generate a dot file from a mindmap file

@@ -28,11 +28,12 @@ extern MM_HDL mmap;
 %type <str>attributes
 
 %%
-mindmap: nodes { mm_print(mmap); }
+mindmap: nodes
 nodes: nodes node
        | node
 node: LEVEL content attributes '\n' {
   mm_add_node(mmap, $1, $2);
+  free($2);
 }
 /* A node content can mix unquoted single IDs and quoted strings N times */
 content: content NAME {
@@ -61,15 +62,6 @@ attribute: NAME '=' value
 value: NAME | INT unit | REAL unit
 unit: %empty | NAME
 %%
-
-MM_HDL mmap;
-/* int */
-/* main (void) */
-/* { */
-/*   mmap = mm_new(); */
-/*   printf("Starting parser\n"); */
-/*   return yyparse (); */
-/* } */
 
 /* Called by yyparse on error. */
 void
