@@ -39,11 +39,15 @@ std::string quote(const std::string &str) {
 /* Given a node, it recursively prints the entire tree
    as a Graphviz digraph, excluding header and footer */
 void node_to_dot(std::ofstream &os, const mm::Node &node, bool master = false) {
+  std::string content = quote(node.content());
+  // Output always the master to cover the case in which there is only one node
+  if (master) {
+    os << content
+       << " [peripheries=2, fontsize=12, fontname=\"alial bold\"];\n";
+  }
+
   if (!node.children().empty()) {
-    std::string content = quote(node.content());
-    if (master) {
-      os << content << " [peripheries=2, fontname=\"alial bold\"];\n";
-    }
+
     for (const auto &child : node.children()) {
       std::string child_content = quote(child->content());
 
@@ -59,7 +63,15 @@ void node_to_dot(std::ofstream &os, const mm::Node &node, bool master = false) {
   }
 }
 
-void parse(const char *mmfilepath, mm::MindMapBuilder &mm_builder) {
+} // namespace
+
+namespace mm {
+
+/* Feed the file into the bison parser.
+
+   \return 0 for success 1 for parse error, 2 for OOM during parsing
+ */
+int parse(const char *mmfilepath, mm::MindMapBuilder &mm_builder) {
   // Initialize the parsing machinery. Note that we MUST initialize the
   // mmap Gloval. This variable is internally used by the parser to build
   // the mindmap in-memory representation
@@ -68,12 +80,11 @@ void parse(const char *mmfilepath, mm::MindMapBuilder &mm_builder) {
 
   // Parse and as a print the resulting mindmap (this is temporary)
   // TODO: Error handling
-  yyparse();
+  const int parse_result = yyparse();
   fclose(yyin);
+  return parse_result;
 }
-} // namespace
 
-namespace mm {
 extern "C" bool to_png(const char *dotfilepath, const char *pngfilepath) {
   // Get a context
   GVC_t *gvc = gvContext();
@@ -95,7 +106,11 @@ extern "C" bool to_dot(const char *mmfilepath, const char *dotfilepath) {
   mm::MindMapBuilder mm_builder{};
 
   // Parse populates the builder
-  parse(mmfilepath, mm_builder);
+  // TODO: Consume the return value of parse, to react to failures
+  if (parse(mmfilepath, mm_builder) != 0) {
+    std::cerr << "Error: Could not parse intput\n";
+    return false;
+  }
   MindMap mindmap{mm_builder.build()};
 
   std::ofstream ofs{dotfilepath};
@@ -108,10 +123,11 @@ extern "C" bool to_dot(const char *mmfilepath, const char *dotfilepath) {
 
   // global node attributes
   ofs << "graph [bgcolor=\"#ffcc40\", splines=curved, root=\"JustDoIt\", "
-         "layout=dot, K=1.1,  overlap=false, start=42, maxiter=100000]\n";
+         "layout=dot, K=1.1,  overlap=false, start=42, maxiter=100000, "
+         "ratio=compress]\n";
   ofs << "node [shape=box, "
-         "color=\"#2e6e3f\"fillcolor=\"#feffed\"style=\"filled,rounded\", "
-         "fontname=arial, fontsize=11]\n";
+         "color=\"#2e6e3f\", fillcolor=\"#feffed\", style=\"filled,rounded\", "
+         "fontname=arial, fontsize=9]\n";
   ofs << "edge [arrowhead = open, color=\"#002b36\"]\n";
 
   // Write out nodes

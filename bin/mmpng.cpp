@@ -24,7 +24,9 @@ int main(int argc, char **argv) {
   // build output filepath as input.png
   std::string output_filepath{argv[1]};
   output_filepath += ".dot";
-  mm::to_dot(argv[1], output_filepath.c_str());
+  if(mm::to_dot(argv[1], output_filepath.c_str())) {
+    return 1;
+  }
 
   std::string png_filepath{argv[1]};
   png_filepath += ".png";

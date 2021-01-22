@@ -1,4 +1,4 @@
-set(SRC test_dummy.cpp test_utils.cpp test_mindmap_builder.cpp)
+set(SRC test_dummy.cpp test_utils.cpp test_mindmap_builder.cpp test_parser.cpp)
 
 ################################################################################
 # Make sure GTest is present and enable it
@@ -16,7 +16,7 @@ include_directories(${GTEST_INLUDE_DIRS})
 
 # Build and executable. We can have one per test file or one for all test files
 add_executable(dummy_t ${SRC})
-target_link_libraries(dummy_t GTest::GTest GTest::Main mm)
+target_link_libraries(dummy_t GTest::GTest GTest::Main mm mmparser)
 
 # Let Google Test find the tests present in the executable
 gtest_add_tests(TARGET dummy_t)
