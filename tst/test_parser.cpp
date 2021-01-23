@@ -13,10 +13,12 @@ namespace {
 
 const int PARSER_SUCESS = 0;
 const int PARSER_FAILURE = 1;
+const bool DOT_SUCESS = true;
+const bool DOT_FAILURE = false;
 
 struct TestFile;
 void test_parser(TestFile &f, int expected);
-void test_dot_generation(TestFile &f);
+void test_dot_generation(TestFile &f, bool expected);
 
 // Utility to create and populate a test file
 struct TestFile {
@@ -41,7 +43,7 @@ struct TestFile {
             bool expected_generation_return = true) {
     write();
     test_parser(*this, expected_parser_return);
-    test_dot_generation(*this);
+    test_dot_generation(*this, expected_generation_return);
   }
 
   const std::string &filepath() { return filepath_; }
@@ -66,9 +68,9 @@ void test_parser(TestFile &f, int expected) {
   traverse(mindmap.root());
 }
 
-void test_dot_generation(TestFile &f) {
+void test_dot_generation(TestFile &f, bool expected) {
   const std::string output{f.filepath() + ".dot"};
-  ASSERT_TRUE(mm::to_dot(f.filepath().c_str(), output.c_str()));
+  ASSERT_EQ(expected, mm::to_dot(f.filepath().c_str(), output.c_str()));
 }
 
 } // namespace
@@ -81,12 +83,13 @@ TEST(parser, single_node) {
 
 // TODO: This test is currently failing. The parser doen't catch
 // semantic checks yet.
-TEST(parser, DISABLED_incorrect_multi_node) {
+TEST(parser, incorrect_multi_node) {
   TestFile f{"multi_node.mm"};
   f << "* Main\n"
     << "** Child1\n"
     << "** Child2\n"
     << "**** Gran1\n"
     << "** Child3\n";
-  f.test(PARSER_FAILURE);
+  f.test(PARSER_FAILURE, DOT_FAILURE);
 }
+

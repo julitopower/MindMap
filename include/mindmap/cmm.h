@@ -8,7 +8,9 @@ extern "C" {
 typedef void *MM_HDL;
 
 // Mindmap takes ownership of the content memory
-void mm_add_node(MM_HDL mm, int level, char *content);
+// 0 -> success
+// 1 -> failures
+int mm_add_node(MM_HDL mm, int level, char *content);
 
 #ifdef __cplusplus
 }

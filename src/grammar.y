@@ -32,8 +32,14 @@ mindmap: nodes
 nodes: nodes node
        | node
 node: LEVEL content attributes '\n' {
-  mm_add_node(mmap, $1, $2);
+  int ret = mm_add_node(mmap, $1, $2);
   free($2);
+  if (ret != 0) { // Failure
+    // TODO: Error reporting could be done better. For instance
+    // with a mm_get_last_error_msg(mmap) function
+    yyerror("Could not add child node");
+    YYERROR;
+  }
 }
 /* A node content can mix unquoted single IDs and quoted strings N times */
 content: content NAME {

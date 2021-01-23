@@ -501,9 +501,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    31,    31,    32,    33,    34,    39,    52,    53,    54,
-      55,    56,    57,    58,    59,    60,    61,    62,    62,    62,
-      63,    63
+       0,    31,    31,    32,    33,    34,    45,    58,    59,    60,
+      61,    62,    63,    64,    65,    66,    67,    68,    68,    68,
+      69,    69
 };
 #endif
 
@@ -1097,14 +1097,20 @@ yyreduce:
   case 5: /* node: LEVEL content attributes '\n'  */
 #line 34 "grammar.y"
                                     {
-  mm_add_node(mmap, (yyvsp[-3].i), (yyvsp[-2].str));
+  int ret = mm_add_node(mmap, (yyvsp[-3].i), (yyvsp[-2].str));
   free((yyvsp[-2].str));
+  if (ret != 0) { // Failure
+    // TODO: Error reporting could be done better. For instance
+    // with a mm_get_last_error_msg(mmap) function
+    yyerror("Could not add child node");
+    YYERROR;
+  }
 }
-#line 1104 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1110 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 6: /* content: content NAME  */
-#line 39 "grammar.y"
+#line 45 "grammar.y"
                       {
   // Allocate memory to hold both strings and a space
   int l = strlen((yyvsp[-1].str)) + strlen((yyvsp[0].str)) + 1;
@@ -1118,53 +1124,53 @@ yyreduce:
   // just copied, so we need to relesease it
   free((yyvsp[-1].str));
 }
-#line 1122 "/home/julio_delg/projects/MindMap/src/parser.c"
-    break;
-
-  case 7: /* content: NAME  */
-#line 52 "grammar.y"
-                { (yyval.str) = strdup((yyvsp[0].str)); }
 #line 1128 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 8: /* content: QSTR  */
-#line 53 "grammar.y"
+  case 7: /* content: NAME  */
+#line 58 "grammar.y"
                 { (yyval.str) = strdup((yyvsp[0].str)); }
 #line 1134 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 9: /* attributes: %empty  */
-#line 54 "grammar.y"
-                   {(yyval.str) = empty_str;}
+  case 8: /* content: QSTR  */
+#line 59 "grammar.y"
+                { (yyval.str) = strdup((yyvsp[0].str)); }
 #line 1140 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 10: /* attributes: attributes_list  */
-#line 55 "grammar.y"
-                              {(yyval.str) = empty_str;}
+  case 9: /* attributes: %empty  */
+#line 60 "grammar.y"
+                   {(yyval.str) = empty_str;}
 #line 1146 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 11: /* attributes: attributes_list ARROW attributes_list  */
-#line 56 "grammar.y"
-                                                    {(yyval.str) = empty_str;}
+  case 10: /* attributes: attributes_list  */
+#line 61 "grammar.y"
+                              {(yyval.str) = empty_str;}
 #line 1152 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 12: /* attributes: ARROW attributes_list  */
-#line 57 "grammar.y"
-                                    {(yyval.str) = empty_str;}
+  case 11: /* attributes: attributes_list ARROW attributes_list  */
+#line 62 "grammar.y"
+                                                    {(yyval.str) = empty_str;}
 #line 1158 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
-  case 13: /* attributes_list: '[' attributes_l ']'  */
-#line 58 "grammar.y"
-                                      {}
+  case 12: /* attributes: ARROW attributes_list  */
+#line 63 "grammar.y"
+                                    {(yyval.str) = empty_str;}
 #line 1164 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
+  case 13: /* attributes_list: '[' attributes_l ']'  */
+#line 64 "grammar.y"
+                                      {}
+#line 1170 "/home/julio_delg/projects/MindMap/src/parser.c"
+    break;
 
-#line 1168 "/home/julio_delg/projects/MindMap/src/parser.c"
+
+#line 1174 "/home/julio_delg/projects/MindMap/src/parser.c"
 
       default: break;
     }
@@ -1358,7 +1364,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 64 "grammar.y"
+#line 70 "grammar.y"
 
 
 /* Called by yyparse on error. */

@@ -1,9 +1,15 @@
 #include "mindmap/mm.hpp"
 #include "mindmap/cmm.h"
+#include <stdexcept>
 
-extern "C" void mm_add_node(MM_HDL mm, int level, char *content) {
-  mm::MindMapBuilder* mm_builder = static_cast<mm::MindMapBuilder*>(mm);
-  mm_builder->add_node(level, content);
+extern "C" int mm_add_node(MM_HDL mm, int level, char *content) {
+  mm::MindMapBuilder *mm_builder = static_cast<mm::MindMapBuilder *>(mm);
+  try {
+    mm_builder->add_node(level, content);
+  } catch (const std::invalid_argument &ex) {
+    return 1;
+  }
+  return 0;
 }
 
 namespace mm {
@@ -90,6 +96,7 @@ MindMapBuilder &MindMapBuilder::add_node(std::size_t level,
       // released correctly.
       std::cerr << "Incorrect child level " << node->level()
                 << " for parent of level " << active_node->level() << "\n";
+      throw std::invalid_argument{"Incorrect child level"};
     } else {
       // Keep poping scopes until we find the right parent
       scopes_.pop_back();
@@ -103,6 +110,7 @@ MindMapBuilder &MindMapBuilder::add_node(std::size_t level,
         // Note that the new node is managed by node_ptr and will get
         // released correctly.
         std::cerr << "Incorrect structure, no parent found\n";
+        throw std::invalid_argument{"Incorrect structure"};
       }
 
       active_node->add_child(std::move(node_ptr));
