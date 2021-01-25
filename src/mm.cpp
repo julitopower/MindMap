@@ -1,8 +1,9 @@
 #include "mindmap/mm.hpp"
 #include "mindmap/cmm.h"
+#include <sstream>
 #include <stdexcept>
 
-extern "C" int mm_add_node(MM_HDL mm, int level, char *content) {
+int mm_add_node(MM_HDL mm, int level, char *content) {
   mm::MindMapBuilder *mm_builder = static_cast<mm::MindMapBuilder *>(mm);
   try {
     mm_builder->add_node(level, content);
@@ -10,6 +11,11 @@ extern "C" int mm_add_node(MM_HDL mm, int level, char *content) {
     return 1;
   }
   return 0;
+}
+
+const char *mm_last_error_msg(MM_HDL mm) {
+  mm::MindMapBuilder *mm_builder = static_cast<mm::MindMapBuilder *>(mm);
+  return mm_builder->last_error_msg().c_str();
 }
 
 namespace mm {
@@ -72,6 +78,10 @@ MindMapBuilder::MindMapBuilder() {}
 
 MindMap MindMapBuilder::build() { return MindMap(std::move(root_)); }
 
+const std::string &MindMapBuilder::last_error_msg() const {
+  return last_error_msg_;
+}
+
 MindMapBuilder &MindMapBuilder::add_node(std::size_t level,
                                          const std::string &content) {
   // This unique_ptr ensures that this memory gets released in the case
@@ -94,9 +104,10 @@ MindMapBuilder &MindMapBuilder::add_node(std::size_t level,
       // Error, level of new node is too large
       // Note that the new node is managed by node_ptr and will get
       // released correctly.
-      std::cerr << "Incorrect child level " << node->level()
-                << " for parent of level " << active_node->level() << "\n";
-      throw std::invalid_argument{"Incorrect child level"};
+      std::stringstream ss;
+      ss << "Incorrect child level " << node->level() << " for parent of level "
+         << active_node->level() << "\n";
+      throw std::invalid_argument{ss.str()};
     } else {
       // Keep poping scopes until we find the right parent
       scopes_.pop_back();
@@ -109,8 +120,7 @@ MindMapBuilder &MindMapBuilder::add_node(std::size_t level,
         // Error, we didn't find a parent
         // Note that the new node is managed by node_ptr and will get
         // released correctly.
-        std::cerr << "Incorrect structure, no parent found\n";
-        throw std::invalid_argument{"Incorrect structure"};
+        throw std::invalid_argument{"Incorrect structure, no parent found\n"};
       }
 
       active_node->add_child(std::move(node_ptr));

@@ -12,6 +12,10 @@ typedef void *MM_HDL;
 // 1 -> failures
 int mm_add_node(MM_HDL mm, int level, char *content);
 
+// Get the message of the last error. Memory must not be
+// released by the caller
+const char *mm_last_error_msg(MM_HDL mm);
+
 #ifdef __cplusplus
 }
 #endif

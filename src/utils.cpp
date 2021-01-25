@@ -78,8 +78,6 @@ int parse(const char *mmfilepath, mm::MindMapBuilder &mm_builder) {
   yyin = fopen(mmfilepath, "r");
   mmap = static_cast<MM_HDL>(&mm_builder);
 
-  // Parse and as a print the resulting mindmap (this is temporary)
-  // TODO: Error handling
   const int parse_result = yyparse();
   fclose(yyin);
   return parse_result;
@@ -106,9 +104,7 @@ extern "C" bool to_dot(const char *mmfilepath, const char *dotfilepath) {
   mm::MindMapBuilder mm_builder{};
 
   // Parse populates the builder
-  // TODO: Consume the return value of parse, to react to failures
-  if (parse(mmfilepath, mm_builder) != 0) {
-    std::cerr << "Error: Could not parse intput\n";
+  if (parse(mmfilepath, mm_builder) != 0) { // FAILURE: Report to caller
     return false;
   }
   MindMap mindmap{mm_builder.build()};

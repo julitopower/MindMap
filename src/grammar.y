@@ -35,9 +35,7 @@ node: LEVEL content attributes '\n' {
   int ret = mm_add_node(mmap, $1, $2);
   free($2);
   if (ret != 0) { // Failure
-    // TODO: Error reporting could be done better. For instance
-    // with a mm_get_last_error_msg(mmap) function
-    yyerror("Could not add child node");
+    yyerror(mm_last_error_msg(mmap));
     YYERROR;
   }
 }

@@ -79,7 +79,8 @@ private:
 class MindMapBuilder {
  private:
   std::unique_ptr<Node> root_;
-  std::vector<Node*> scopes_;  
+  std::vector<Node*> scopes_;
+  std::string last_error_msg_;
  public:
   MindMapBuilder();
   MindMapBuilder(const MindMapBuilder&) = delete;
@@ -88,5 +89,6 @@ class MindMapBuilder {
   MindMap build();
   
   MindMapBuilder& add_node(std::size_t level, const std::string& content);
+  const std::string& last_error_msg() const;
 };
 } // namespace mm

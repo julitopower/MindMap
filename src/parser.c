@@ -501,9 +501,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    31,    31,    32,    33,    34,    45,    58,    59,    60,
-      61,    62,    63,    64,    65,    66,    67,    68,    68,    68,
-      69,    69
+       0,    31,    31,    32,    33,    34,    43,    56,    57,    58,
+      59,    60,    61,    62,    63,    64,    65,    66,    66,    66,
+      67,    67
 };
 #endif
 
@@ -1100,17 +1100,15 @@ yyreduce:
   int ret = mm_add_node(mmap, (yyvsp[-3].i), (yyvsp[-2].str));
   free((yyvsp[-2].str));
   if (ret != 0) { // Failure
-    // TODO: Error reporting could be done better. For instance
-    // with a mm_get_last_error_msg(mmap) function
-    yyerror("Could not add child node");
+    yyerror(mm_last_error_msg(mmap));
     YYERROR;
   }
 }
-#line 1110 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1108 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 6: /* content: content NAME  */
-#line 45 "grammar.y"
+#line 43 "grammar.y"
                       {
   // Allocate memory to hold both strings and a space
   int l = strlen((yyvsp[-1].str)) + strlen((yyvsp[0].str)) + 1;
@@ -1124,53 +1122,53 @@ yyreduce:
   // just copied, so we need to relesease it
   free((yyvsp[-1].str));
 }
-#line 1128 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1126 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 7: /* content: NAME  */
-#line 58 "grammar.y"
+#line 56 "grammar.y"
                 { (yyval.str) = strdup((yyvsp[0].str)); }
-#line 1134 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1132 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 8: /* content: QSTR  */
-#line 59 "grammar.y"
+#line 57 "grammar.y"
                 { (yyval.str) = strdup((yyvsp[0].str)); }
-#line 1140 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1138 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 9: /* attributes: %empty  */
-#line 60 "grammar.y"
+#line 58 "grammar.y"
                    {(yyval.str) = empty_str;}
-#line 1146 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1144 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 10: /* attributes: attributes_list  */
-#line 61 "grammar.y"
+#line 59 "grammar.y"
                               {(yyval.str) = empty_str;}
-#line 1152 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1150 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 11: /* attributes: attributes_list ARROW attributes_list  */
-#line 62 "grammar.y"
+#line 60 "grammar.y"
                                                     {(yyval.str) = empty_str;}
-#line 1158 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1156 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 12: /* attributes: ARROW attributes_list  */
-#line 63 "grammar.y"
+#line 61 "grammar.y"
                                     {(yyval.str) = empty_str;}
-#line 1164 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1162 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
   case 13: /* attributes_list: '[' attributes_l ']'  */
-#line 64 "grammar.y"
+#line 62 "grammar.y"
                                       {}
-#line 1170 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1168 "/home/julio_delg/projects/MindMap/src/parser.c"
     break;
 
 
-#line 1174 "/home/julio_delg/projects/MindMap/src/parser.c"
+#line 1172 "/home/julio_delg/projects/MindMap/src/parser.c"
 
       default: break;
     }
@@ -1364,7 +1362,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 70 "grammar.y"
+#line 68 "grammar.y"
 
 
 /* Called by yyparse on error. */
