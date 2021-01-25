@@ -93,3 +93,18 @@ TEST(parser, incorrect_multi_node) {
   f.test(PARSER_FAILURE, DOT_FAILURE);
 }
 
+TEST(parser, node_content) {
+  std::vector<std::string> tests_payload{
+      "* Multi Word unquoted is fine", "* \"Multi Word unquoted is fine\"",
+      "* \"Mixed\" and unquoted"
+      // TODO: Fix this case
+      // "* This \"fails\""
+  };
+
+  for (const auto &payload : tests_payload) {
+    TestFile f{"node_content.mm"};
+    f << payload << "\n";
+    std::cout << "Testing: " << payload << std::endl;
+    f.test();
+  }
+}
