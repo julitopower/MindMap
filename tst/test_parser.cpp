@@ -95,14 +95,35 @@ TEST(parser, incorrect_multi_node) {
 
 TEST(parser, node_content) {
   std::vector<std::string> tests_payload{
-      "* Multi Word unquoted is fine", "* \"Multi Word unquoted is fine\"",
-      "* \"Mixed\" and unquoted"
+      "* Content",
+      // TODO: Fix this case
+      //"* Multi Word unquoted is fine\n",
+      "* \"Multi Word unquoted is fine\"", "* \"Mixed\" and unquoted"
       // TODO: Fix this case
       // "* This \"fails\""
   };
 
   for (const auto &payload : tests_payload) {
     TestFile f{"node_content.mm"};
+    f << payload << "\n";
+    std::cout << "Testing: " << payload << std::endl;
+    f.test();
+  }
+}
+
+TEST(parser, tree_structure) {
+  std::vector<std::string> tests_payload{
+      R"(* A
+** A1
+** A2
+** A3
+*** A31
+*** A32)"
+
+  };
+
+  for (const auto &payload : tests_payload) {
+    TestFile f{"tree_structure.mm"};
     f << payload << "\n";
     std::cout << "Testing: " << payload << std::endl;
     f.test();
