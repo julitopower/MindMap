@@ -95,10 +95,11 @@ TEST(parser, incorrect_multi_node) {
 
 TEST(parser, node_content) {
   std::vector<std::string> tests_payload{
-      "* Content",
-      // TODO: Fix this case
-      //"* Multi Word unquoted is fine\n",
-      "* \"Multi Word unquoted is fine\"", "* \"Mixed\" and unquoted"
+      "* unquoted_single_word_content",
+      "* \"quoted_single_word_content\"",
+      "* Multi Word unquoted is fine",
+      "* \"Multi Word quoted is fine\"", "* \"Mixed\" and unquoted",
+      "* \"quoted mixed with\" unquoted",
       // TODO: Fix this case
       // "* This \"fails\""
   };
