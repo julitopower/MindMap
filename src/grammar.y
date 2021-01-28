@@ -39,6 +39,7 @@ node: LEVEL content attributes '\n' {
     YYERROR;
   }
 }
+    | '\n'
 /* A node content can mix unquoted single IDs and quoted strings N times */
 content: content NAME {
   // Allocate memory to hold both strings and a space

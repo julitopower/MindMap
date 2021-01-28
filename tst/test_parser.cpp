@@ -112,7 +112,7 @@ TEST(parser, node_content) {
   }
 }
 
-TEST(parser, tree_structure) {
+TEST(parser, tree_basic_structure) {
   std::vector<std::string> tests_payload{
       R"(* A
 ** A1
@@ -120,6 +120,28 @@ TEST(parser, tree_structure) {
 ** A3
 *** A31
 *** A32)"
+
+  };
+
+  for (const auto &payload : tests_payload) {
+    TestFile f{"tree_structure.mm"};
+    f << payload << "\n";
+    std::cout << "Testing: " << payload << std::endl;
+    f.test();
+  }
+}
+
+TEST(parser, tree_with_empty_lines) {
+  std::vector<std::string> tests_payload{
+      R"(
+* A
+** A1
+
+** A2
+** A3
+*** A31
+*** A32
+)"
 
   };
 
